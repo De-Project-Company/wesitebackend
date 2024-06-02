@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model members {
+  id                       String       @id @default(cuid())
+  preferedName             String?
+  fullName                 String
+  bio                      String
+  image                    String?
+  project                  project?     @relation(fields: [projectId], references: [id])
+  projectId                String?
+  status                   String       @default("pending")
+  publication              publication? @relation(fields: [publicationId], references: [id])
+  publicationId            String?
+  address                  String
+  entrydate                DateTime     @default(now())
+  portfolio                String?
+  email                    String       @unique
+  stack                    stack?       @relation(fields: [stackId], references: [id])
+  stackId                  String?
+  languages                languages?   @relation(fields: [languagesId], references: [id])
+  languagesId              String?
+  mentor                   Boolean?     @default(false)
+  intrests                 String?
+  expetations              String?
+  whatdoyoubringtothetable String?
+  dateofbirth              DateTime?
+  whatsappnumber           String       @unique
+  commetmentlevel          Int?
+  roles                    roles[]
+  framworks                framworks[]
+  socials                  socials[]
+  otp                      String?
+  otpExpires               DateTime?
+  verified                 Boolean      @default(false)
+
+  @@map("Team Members")
+}
+
+model project {
+  id          String    @id @default(cuid())
+  members     members[]
+  livelink    String
+  image       String
+  description String
+  opensource  Boolean   @default(false)
+  githublink  String?
+  memberrole  roles     @relation(fields: [rolesId], references: [id])
+  rolesId     String
+
+  @@map("Projects")
+}
+
+model publication {
+  id      String    @id @default(cuid())
+  type    String
+  members members[]
+
+  @@map("Publications")
+}
+
+model stack {
+  id      String    @id @default(cuid())
+  stack   String
+  members members[]
+
+  @@map("Stacks")
+}
+
+model languages {
+  id       String    @id @default(cuid())
+  language String
+  members  members[]
+
+  @@map("Languages")
+}
+
+model roles {
+  id        String    @id @default(cuid())
+  members   members?  @relation(fields: [membersId], references: [id])
+  membersId String?
+  role      String
+  project   project[]
+
+  @@map("role")
+}
+
+model framworks {
+  id        String   @id @default(cuid())
+  framworks String
+  members   members? @relation(fields: [membersId], references: [id])
+  membersId String?
+
+  @@map("Frameworks")
+}
+
+model socials {
+  id        Int     @id @default(autoincrement())
+  platform  String
+  url       String
+  member    members @relation(fields: [membersId], references: [id])
+  membersId String
+}
