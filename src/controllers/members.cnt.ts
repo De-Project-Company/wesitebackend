@@ -20,13 +20,18 @@ const Register = async (req: Request, res: Response) => {
   }
 
   try {
-    const member = await prisma.members.findUnique({
+    const member = await prisma.members.findFirst({
       where: {
-        email,
+        OR: [{ email }, { preferedName }],
       },
     });
     if (member) {
-      return res.status(400).json({ message: "Member already exists" });
+      return res
+        .status(400)
+        .json({
+          message:
+            "Member with this email and PreferedName already already exists",
+        });
     }
     const capitalizedFirstName = getCapitalizedFullName(fullName);
     const otp = generateNumericOTP(6);
