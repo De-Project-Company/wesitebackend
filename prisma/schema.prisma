@@ -9,91 +9,78 @@ datasource db {
 }
 
 model members {
-  id                       String       @id @default(cuid())
-  preferedName             String?
+  id                       String        @id @default(cuid())
+  preferedName             String?       @unique
   fullName                 String
   bio                      String
   image                    String?
-  project                  project?     @relation(fields: [projectId], references: [id])
-  projectId                String?
-  status                   String       @default("pending")
-  publication              publication? @relation(fields: [publicationId], references: [id])
-  publicationId            String?
+  status                   String        @default("pending")
   address                  String
-  entrydate                DateTime     @default(now())
+  createdAt                DateTime      @default(now())
   portfolio                String?
-  email                    String       @unique
-  stack                    stack?       @relation(fields: [stackId], references: [id])
-  stackId                  String?
-  languages                languages?   @relation(fields: [languagesId], references: [id])
-  languagesId              String?
-  mentor                   Boolean?     @default(false)
+  email                    String        @unique
+  mentor                   Boolean?      @default(false)
   intrests                 String?
   expetations              String?
   whatdoyoubringtothetable String?
-  dateofbirth              DateTime?
-  whatsappnumber           String       @unique
+  DOB                      DateTime?
+  whatsappnumber           String        @unique
   commetmentlevel          Int?
-  roles                    roles[]
-  framworks                framworks[]
-  socials                  socials[]
   otp                      String?
   otpExpires               DateTime?
-  verified                 Boolean      @default(false)
+  verified                 Boolean       @default(false)
+  framworks                framworks[]
+  socials                  socials[]
+  project                  project[]
+  publication              publication[]
+  languages                languages[]
+  stack                    stack[]
 
   @@map("Team Members")
 }
 
 model project {
-  id          String    @id @default(cuid())
-  members     members[]
+  id          String  @id @default(cuid())
   livelink    String
   image       String
   description String
-  opensource  Boolean   @default(false)
+  opensource  Boolean @default(false)
   githublink  String?
-  memberrole  roles     @relation(fields: [rolesId], references: [id])
-  rolesId     String
+  members     members @relation(fields: [membersId], references: [id])
+  membersId   String
 
   @@map("Projects")
 }
 
 model publication {
-  id      String    @id @default(cuid())
-  type    String
-  members members[]
+  id        String  @id @default(cuid())
+  type      String
+  owner     members @relation(fields: [membersId], references: [id])
+  membersId String
 
   @@map("Publications")
 }
 
 model stack {
-  id      String    @id @default(cuid())
-  stack   String
-  members members[]
+  id        Int     @id @default(autoincrement())
+  stack     String
+  users     members @relation(fields: [membersId], references: [id])
+  membersId String
 
   @@map("Stacks")
 }
 
 model languages {
-  id       String    @id @default(cuid())
-  language String
-  members  members[]
+  id        Int     @id @default(autoincrement())
+  language  String
+  users     members @relation(fields: [membersId], references: [id])
+  membersId String
 
   @@map("Languages")
 }
 
-model roles {
-  id        String    @id @default(cuid())
-  members   members?  @relation(fields: [membersId], references: [id])
-  membersId String?
-  role      String
-  project   project[]
-
-  @@map("role")
-}
-
 model framworks {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   framworks String
   members   members? @relation(fields: [membersId], references: [id])
   membersId String?
