@@ -33,8 +33,7 @@ model members {
   socials                  socials[]
   project                  project[]
   publication              publication[]
-  languages                languages[]
-  stack                    stack[]
+  department               String?
 
   @@map("Team Members")
 }
@@ -61,23 +60,8 @@ model publication {
   @@map("Publications")
 }
 
-model stack {
-  id        Int     @id @default(autoincrement())
-  stack     String
-  users     members @relation(fields: [membersId], references: [id])
-  membersId String
 
-  @@map("Stacks")
-}
 
-model languages {
-  id        Int     @id @default(autoincrement())
-  language  String
-  users     members @relation(fields: [membersId], references: [id])
-  membersId String
-
-  @@map("Languages")
-}
 
 model framworks {
   id        Int      @id @default(autoincrement())
