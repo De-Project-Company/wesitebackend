@@ -104,7 +104,7 @@ const getAllUsers = async (req: Request, res: Response) => {
     const users = await prisma.members.findMany({
       include: {
         framworks: true,
-        project: true,
+        projects: true,
         publication: true,
         socials: true,
       },
@@ -126,7 +126,7 @@ const getMemberById = async (req: Request, res: Response) => {
       where: { id },
       include: {
         framworks: true,
-        project: true,
+        projects: true,
         publication: true,
         socials: true,
       },
