@@ -45,6 +45,8 @@ model Project {
   description   String
   startDate     DateTime
   endDate       DateTime?
+  image         String?
+  link          String?
   createdAt     DateTime        @default(now())
   members       members[]       @relation("MemberProjects")
   ProjectMember ProjectMember[]

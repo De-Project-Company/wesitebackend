@@ -3,7 +3,7 @@ import cors from "cors";
 import https from "https";
 import cron from "node-cron";
 import { sayHelloController } from "./controllers";
-import { memberRoute } from "./routes";
+import { memberRoute, proRoute } from "./routes";
 import { errorHandler } from "./middlewares";
 
 const app = express();
@@ -29,6 +29,7 @@ cron.schedule("*/5 * * * *", () => {
 
 app.get("/", sayHelloController);
 app.use("/api/v1/members", memberRoute);
+app.use("/api/v1", proRoute);
 
 app.use(errorHandler);
 
