@@ -126,7 +126,11 @@ const getMemberById = async (req: Request, res: Response) => {
       where: { id },
       include: {
         framworks: true,
-        projects: true,
+        projects: {
+          include: {
+            members: true
+          }
+        },
         publication: true,
         socials: true,
       },
