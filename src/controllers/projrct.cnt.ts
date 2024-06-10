@@ -27,8 +27,8 @@ const getProjectbyId = async (req: Request, res: Response) => {
         members: true,
       },
     });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    if (!project) {
+      return res.status(404).json({ message: "project not found" });
     }
 
     return res.status(200).json({ project: project });
