@@ -29,10 +29,13 @@ model members {
   otp                      String?
   otpExpires               DateTime?
   verified                 Boolean         @default(false)
-  framworks                framworks[]
+  programminglanguage      String[]
+  stack                    String[]
+  experience               String?  
+  department               String?
+  
   socials                  socials[]
   publication              publication[]
-  department               String?
   projects                 Project[]       @relation("MemberProjects")
   ProjectMember            ProjectMember[]
 
@@ -69,15 +72,6 @@ model publication {
   membersId String
 
   @@map("Publications")
-}
-
-model framworks {
-  id        Int      @id @default(autoincrement())
-  framworks String
-  members   members? @relation(fields: [membersId], references: [id])
-  membersId String?
-
-  @@map("Frameworks")
 }
 
 model socials {

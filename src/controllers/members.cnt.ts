@@ -103,7 +103,6 @@ const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await prisma.members.findMany({
       include: {
-        framworks: true,
         projects: true,
         publication: true,
         socials: true,
@@ -125,11 +124,10 @@ const getMemberById = async (req: Request, res: Response) => {
     const user = await prisma.members.findUnique({
       where: { id },
       include: {
-        framworks: true,
         projects: {
           include: {
-            members: true
-          }
+            members: true,
+          },
         },
         publication: true,
         socials: true,
@@ -146,4 +144,56 @@ const getMemberById = async (req: Request, res: Response) => {
   }
 };
 
-export { Register, VerifyOtp, getAllUsers, getMemberById };
+const upDateRegistraion = async (req: Request, res: Response) => {
+  const id = req.query.id as string;
+  if (!id) {
+    return res.status(400).json({ message: "Id is needed" });
+  }
+
+  const {
+    image,
+    stack,
+    programminglanguage,
+    expetations,
+    intrests,
+    whatdoyoubringtothetable,
+    commetmentlevel,
+    portfolio,
+    experience,
+  }: members = req.body;
+
+  try {
+    const user = await prisma.members.findUnique({
+      where: { id },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await prisma.members.update({
+      where: { id },
+      data: {
+        image: image ? image : "",
+        stack: Array.isArray(stack) ? stack : [stack],
+        programminglanguage: Array.isArray(programminglanguage)
+          ? programminglanguage
+          : [programminglanguage],
+        whatdoyoubringtothetable: whatdoyoubringtothetable
+          ? whatdoyoubringtothetable
+          : "",
+        expetations: expetations ? expetations : "",
+        intrests: intrests ? intrests : "",
+        commetmentlevel: commetmentlevel ? commetmentlevel : 2,
+        portfolio: portfolio ? portfolio : "",
+        experience: experience ? experience : "",
+      },
+    });
+
+    return res.status(200).json({ member: user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export { Register, VerifyOtp, getAllUsers, getMemberById, upDateRegistraion };
