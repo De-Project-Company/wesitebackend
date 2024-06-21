@@ -160,6 +160,7 @@ const upDateRegistraion = async (req: Request, res: Response) => {
     commetmentlevel,
     portfolio,
     experience,
+    mentor,
   }: members = req.body;
 
   try {
@@ -186,6 +187,7 @@ const upDateRegistraion = async (req: Request, res: Response) => {
         commetmentlevel: commetmentlevel ? commetmentlevel : 2,
         portfolio: portfolio ? portfolio : "",
         experience: experience ? experience : "",
+        mentor: mentor ? mentor : false,
       },
     });
 
