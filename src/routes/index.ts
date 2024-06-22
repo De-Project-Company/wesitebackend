@@ -13,6 +13,7 @@ import { GetAllPrroject, getProjectbyId } from "../controllers/projrct.cnt";
 const router = Router();
 const memberRoute = Router();
 const proRoute = Router();
+const pubRoute = Router();
 
 router.get("/", sayHelloController);
 
@@ -28,6 +29,6 @@ proRoute.get("/project", GetAllPrroject);
 proRoute.get("/get-project-by-id?:id", getProjectbyId);
 
 // publications routes
-proRoute.get("/publication", getPublication);
+pubRoute.get("/publication", getPublication);
 
-export { router, memberRoute, proRoute };
+export { router, memberRoute, proRoute, pubRoute };
