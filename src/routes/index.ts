@@ -6,6 +6,7 @@ import {
   getAllUsers,
   getMemberById,
   upDateRegistraion,
+  getPublication,
 } from "../controllers/members.cnt";
 import { GetAllPrroject, getProjectbyId } from "../controllers/projrct.cnt";
 
@@ -25,5 +26,8 @@ memberRoute.post("/update-registraion?:id", upDateRegistraion);
 // project routes
 proRoute.get("/project", GetAllPrroject);
 proRoute.get("/get-project-by-id?:id", getProjectbyId);
+
+// publications routes
+proRoute.get("/publication", getPublication);
 
 export { router, memberRoute, proRoute };

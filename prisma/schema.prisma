@@ -31,10 +31,9 @@ model members {
   verified                 Boolean         @default(false)
   programminglanguage      String[]
   stack                    String[]
-  experience               String?  
+  experience               String?
   department               String?
-  
-  socials                  socials[]
+  socials                  String[]
   publication              publication[]
   projects                 Project[]       @relation("MemberProjects")
   ProjectMember            ProjectMember[]
@@ -66,18 +65,15 @@ model ProjectMember {
 }
 
 model publication {
-  id        String  @id @default(cuid())
-  type      String
-  owner     members @relation(fields: [membersId], references: [id])
-  membersId String
+  id          String   @id @default(cuid())
+  type        String
+  owner       members  @relation(fields: [membersId], references: [id])
+  membersId   String
+  image       String
+  link        String
+  title       String
+  date        DateTime
+  description String?
 
   @@map("Publications")
-}
-
-model socials {
-  id        Int     @id @default(autoincrement())
-  platform  String
-  url       String
-  member    members @relation(fields: [membersId], references: [id])
-  membersId String
 }

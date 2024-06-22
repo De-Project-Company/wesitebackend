@@ -105,7 +105,6 @@ const getAllUsers = async (req: Request, res: Response) => {
       include: {
         projects: true,
         publication: true,
-        socials: true,
       },
     });
     return res.status(200).json({ members: users });
@@ -130,7 +129,6 @@ const getMemberById = async (req: Request, res: Response) => {
           },
         },
         publication: true,
-        socials: true,
       },
     });
     if (!user) {
@@ -198,4 +196,31 @@ const upDateRegistraion = async (req: Request, res: Response) => {
   }
 };
 
-export { Register, VerifyOtp, getAllUsers, getMemberById, upDateRegistraion };
+const getPublication = async (req: Request, res: Response) => {
+  try {
+    const publications = await prisma.publication.findMany({
+      include: {
+        owner: {
+          select: {
+            fullName: true,
+            image: true,
+            preferedName: true,
+            id: true,
+          },
+        },
+      },
+    });
+    return res.status(200).json({ publications });
+  } catch (error) {
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export {
+  Register,
+  VerifyOtp,
+  getAllUsers,
+  getMemberById,
+  upDateRegistraion,
+  getPublication,
+};
