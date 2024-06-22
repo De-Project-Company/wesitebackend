@@ -49,7 +49,7 @@ const Register = async (req: Request, res: Response) => {
     });
 
     await Sendmail({
-      from: `STARTERSHOUSE <support@startershouse.com>`,
+      from: `STARTERSHOUSE <hello@startershouse.com>`,
       to: email,
       subject: "OTP VERIFICATION",
       html: compilerwelcome(capitalizedFirstName, parseInt(otp)),
