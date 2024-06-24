@@ -1,5 +1,5 @@
 {
-  "name": "evento",
+  "name": "startershouse",
   "version": "1.0.0",
   "description": "Viscio api service",
   "main": "./src/app.ts",
