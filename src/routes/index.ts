@@ -9,7 +9,7 @@ import {
   getPublication,
 } from "../controllers/members.cnt";
 import { GetAllPrroject, getProjectbyId } from "../controllers/projrct.cnt";
-import { getAllEvents, getEventById } from "src/controllers/events";
+import { getAllEvents, getEventById } from "../controllers/events";
 
 const router = Router();
 const memberRoute = Router();
