@@ -3,7 +3,7 @@ import cors from "cors";
 import https from "https";
 import cron from "node-cron";
 import { sayHelloController } from "./controllers";
-import { memberRoute, proRoute, pubRoute } from "./routes";
+import { memberRoute, proRoute, pubRoute, eveRoute } from "./routes";
 import { errorHandler } from "./middlewares";
 
 const app = express();
@@ -31,6 +31,7 @@ app.get("/", sayHelloController);
 app.use("/api/v1/members", memberRoute);
 app.use("/api/v1", proRoute);
 app.use("/api/v1", pubRoute);
+app.use("/api/v1", eveRoute);
 
 app.use(errorHandler);
 

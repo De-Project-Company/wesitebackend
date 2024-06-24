@@ -9,11 +9,13 @@ import {
   getPublication,
 } from "../controllers/members.cnt";
 import { GetAllPrroject, getProjectbyId } from "../controllers/projrct.cnt";
+import { getAllEvents, getEventById } from "src/controllers/events";
 
 const router = Router();
 const memberRoute = Router();
 const proRoute = Router();
 const pubRoute = Router();
+const eveRoute = Router();
 
 router.get("/", sayHelloController);
 
@@ -31,4 +33,8 @@ proRoute.get("/get-project-by-id?:id", getProjectbyId);
 // publications routes
 pubRoute.get("/publication", getPublication);
 
-export { router, memberRoute, proRoute, pubRoute };
+// events routes
+eveRoute.get("/event", getAllEvents);
+eveRoute.get("/get-event-by-id?:id", getEventById);
+
+export { router, memberRoute, proRoute, pubRoute, eveRoute };

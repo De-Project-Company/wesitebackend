@@ -77,3 +77,14 @@ model publication {
 
   @@map("Publications")
 }
+
+model events {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  location    String
+  past        Boolean  @default(true)
+  title       String
+  image       String
+  speakers    String[]
+  description String
+}
